@@ -51,8 +51,6 @@ const MemberList = () => {
 
   return (
     <div>
-      <h1>Members</h1>
-
       {/* Search Input */}
       <SearchInput
         type="text"

@@ -20,7 +20,7 @@ function App() {
       <Title>Member and Project Dashboard</Title>
 
       <Section>
-        <h2>Members</h2>
+        <h2 style={{ color: "white" }}>Members</h2>
         <Button onClick={() => setShowAddMemberModal(true)}>Add Member</Button>
         <MemberList />
       </Section>
