@@ -54,10 +54,11 @@ export const Button = styled.button`
 `;
 
 export const DeleteButton = styled.button`
-  background-color: #333333; /* Slightly lighter dark gray */
-  color: #ffffff; /* White text */
+  background-color: #cbc3e3; /* Slightly lighter dark gray */
+  color: #black;
   margin-right: 20px;
   padding: 5px;
+  width: 7rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -87,45 +88,85 @@ export const ModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.9); /* Almost opaque black */
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
+  background-color: rgba(0, 0, 0, 0.4); /* Dark semi-transparent backdrop */
+  backdrop-filter: blur(10px); /* Stronger blur effect for background content */
+  z-index: 1000; /* Ensure modal is above all other content */
+  overflow-y: auto; /* Allows scrolling for long content */
 `;
 
 export const ModalContent = styled.div`
-  background-color: #222222; /* Dark gray for the modal background */
-  padding: 30px;
-  border-radius: 8px;
-  width: 400px;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* Light shadow for contrast */
+  background-color: rgba(28, 28, 28, 0.5); /* Dark and more transparent */
+  padding: 40px;
+  border-radius: 10px;
+  width: 70%; /* Wider modal */
+  max-width: 700px; /* Sets a reasonable maximum width */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* Adjusted shadow for a softer 3D effect */
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
+  gap: 20px;
+  color: #ffffff; /* White text for readability */
+  font-family: "Raleway", sans-serif; /* Consistent font usage */
+  animation: slide-in 0.3s ease-out forwards; /* Smooth slide-in animation */
+  @keyframes slide-in {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 `;
 export const MemberItem = styled.li`
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  align-items: center;
-  gap: 10px;
-  padding: 15px;
-  margin-bottom: 10px;
+  grid-template-columns: 1fr 2fr; // Two columns with a ratio to provide space for content
+  align-items: center; // Centers items vertically within each grid cell
+  gap: 10px; // Space between grid columns
+  padding: 15px; // Padding around the content inside each item
+  margin-bottom: 10px; // Margin below each item for spacing in lists
   background: linear-gradient(
     135deg,
     #1a1a1a,
     #3a3a3a
-  ); /* Dark gray gradient */
-  border: 1px solid #222222; /* Subtle border */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for default state */
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  color: #ffffff; /* Ensure text remains white */
-  transition: all 0.3s ease; /* Smooth transition for all properties */
+  ); // Dark gray gradient for a modern, sleek look
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); // Additional background color for depth effect
+  border: 1px solid #222222; // Subtle border matching the dark theme
+  border-radius: 12px; // Increased border-radius for more rounded corners
+  box-shadow:
+    0 2px 4px rgba(255, 255, 255, 0.1),
+    // Subtle shadow for depth
+    0 4px 8px rgba(
+        255,
+        255,
+        255,
+        0.2
+      ) inset; // Inset shadow for an inner glow effect
+  font-family: "Raleway", sans-serif; // Consistent font usage for UI uniformity
+  color: #ffffff; // White text to contrast against the dark background
+  transition: all 0.3s ease; // Smooth transition for hover effects
 
   &:hover {
-    transform: translateY(-5px); /* Moves the tile up slightly */
-    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3); /* More prominent shadow on hover */
+    transform: translateY(
+      -5px
+    ); // Elevates the item slightly on hover for a dynamic feel
+    box-shadow:
+      0 8px 16px rgba(255, 255, 255, 0.3),
+      // More prominent shadow on hover for visual feedback
+      0 6px 12px rgba(
+          255,
+          255,
+          255,
+          0.25
+        ) inset; // Strengthened inset shadow for added depth on hover
   }
 `;
+
 export const MemberDetail = styled.div`
   padding: 5px;
   font-size: 0.9rem;
