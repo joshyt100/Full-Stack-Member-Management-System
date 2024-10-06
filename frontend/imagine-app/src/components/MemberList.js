@@ -1,3 +1,4 @@
+// MemberList.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -11,12 +12,15 @@ import {
   DeleteButton,
   SearchInput,
 } from "./StyledComponents";
+import UpdateMemberModal from "./UpdateMemberModal";
 
 const MemberList = () => {
   const [members, setMembers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // State to track the search query
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
 
-  useEffect(() => {
+  const fetchMembers = () => {
     axios
       .get("/members")
       .then((response) => {
@@ -25,6 +29,10 @@ const MemberList = () => {
       .catch((error) => {
         console.error("Error fetching members:", error);
       });
+  };
+
+  useEffect(() => {
+    fetchMembers();
   }, []);
 
   const deleteMember = (memberId) => {
@@ -44,7 +52,19 @@ const MemberList = () => {
       });
   };
 
-  // Filter members based on the search query (case-insensitive)
+  // Function to open the modal and pass the selected member
+  const openUpdateModal = (member) => {
+    setSelectedMember(member);
+    setShowUpdateModal(true);
+  };
+
+  // Function to handle closing the modal and refreshing the member list
+  const handleModalClose = () => {
+    setShowUpdateModal(false);
+    fetchMembers(); // Refresh the members list after updating
+  };
+
+  // Filter members based on the search query
   const filteredMembers = members.filter((member) =>
     member.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -56,16 +76,16 @@ const MemberList = () => {
         type="text"
         placeholder="Search members by name"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)} // Update the search query
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
 
       {/* Filtered member list */}
       {filteredMembers.length > 0 ? (
         filteredMembers.map((member) => (
           <RoleSection key={member.id}>
-            <MemberItem>
+            <MemberItem onClick={() => openUpdateModal(member)}>
               <MemberName>
-                <DetailLabel>Name:</DetailLabel> {member.name}
+                <DetailLabel></DetailLabel> {member.name}
               </MemberName>
               <MemberDetail>
                 <DetailLabel>Major:</DetailLabel> {member.major}
@@ -74,19 +94,30 @@ const MemberList = () => {
                 <DetailLabel>Bio:</DetailLabel> {member.bio}
               </MemberDetail>
               <MemberDetail>
-                <DetailLabel>Graduation Year:</DetailLabel> {member.grad}
+                <DetailLabel>Graduation Year:</DetailLabel> {member.gradDate}
               </MemberDetail>
               <MemberRole>
                 <DetailLabel>Role:</DetailLabel> {member.role}
               </MemberRole>
-              <DeleteButton onClick={() => deleteMember(member.id)}>
+              {/* Prevent the delete button click from opening the update modal */}
+              <DeleteButton
+                onClick={(e) => {
+                  e.stopPropagation(); // Stop the event from bubbling up
+                  deleteMember(member.id);
+                }}
+              >
                 Delete
               </DeleteButton>
             </MemberItem>
           </RoleSection>
         ))
       ) : (
-        <p>No members found.</p> // Display a message if no members match the search
+        <p>No members found.</p>
+      )}
+
+      {/* Update Member Modal */}
+      {showUpdateModal && selectedMember && (
+        <UpdateMemberModal member={selectedMember} onClose={handleModalClose} />
       )}
     </div>
   );

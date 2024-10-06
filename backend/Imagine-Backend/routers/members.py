@@ -148,5 +148,5 @@ def update_member(member_id: str, member: Member):
     if not get_doc.exists:
         print("Member does not exist")
         raise HTTPException(status_code=404, detail="Member does not exist")
-    doc.update(member.dict())
+    doc.update(member.to_dict())
     return "Member updated successfully"

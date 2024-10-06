@@ -16,13 +16,19 @@ const AddMemberModal = ({ onClose }) => {
   const handleChange = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
   };
+
   const handleDateChange = (date) => {
-    setMember({ ...member, gradDate: date.toISOString().split("T")[0] }); // Format as 'YYYY-MM-DD'
+    setMember({ ...member, gradDate: date }); // Keep it as a Date object
   };
 
   const handleSubmit = () => {
+    const formattedMember = {
+      ...member,
+      gradDate: member.gradDate.toISOString().split("T")[0], // Format as 'YYYY-MM-DD'
+    };
+
     axios
-      .post("/members", member)
+      .post("/members", formattedMember)
       .then(() => {
         alert("Member added successfully!");
         onClose();
@@ -62,7 +68,7 @@ const AddMemberModal = ({ onClose }) => {
           selected={member.gradDate}
           onChange={handleDateChange}
           dateFormat="MMMM d, yyyy"
-          className="datepicker" // This is to apply custom styles if necessary
+          className="datepicker" // Apply custom styles if necessary
         />
         <input
           type="text"
@@ -71,8 +77,12 @@ const AddMemberModal = ({ onClose }) => {
           value={member.role}
           onChange={handleChange}
         />
-        <Button onClick={handleSubmit}>Submit</Button>
-        <Button onClick={onClose}>Cancel</Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={onClose} style={{ backgroundColor: "#ff4c4c" }}>
+            Cancel
+          </Button>
+        </div>
       </ModalContent>
     </ModalWrapper>
   );

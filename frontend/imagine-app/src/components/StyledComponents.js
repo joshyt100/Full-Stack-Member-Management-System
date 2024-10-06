@@ -102,7 +102,6 @@ export const ModalContent = styled.div`
   gap: 15px;
   font-family: "Raleway", sans-serif; /* Apply Raleway font */
 `;
-
 export const MemberItem = styled.li`
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -117,11 +116,16 @@ export const MemberItem = styled.li`
   ); /* Dark gray gradient */
   border: 1px solid #222222; /* Subtle border */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow */
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for default state */
   font-family: "Raleway", sans-serif; /* Apply Raleway font */
   color: #ffffff; /* Ensure text remains white */
-`;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
 
+  &:hover {
+    transform: translateY(-5px); /* Moves the tile up slightly */
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3); /* More prominent shadow on hover */
+  }
+`;
 export const MemberDetail = styled.div`
   padding: 5px;
   font-size: 0.9rem;
