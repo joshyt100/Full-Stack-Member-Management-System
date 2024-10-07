@@ -54,15 +54,16 @@ export const Button = styled.button`
     transform: scale(0.95);
   }
 `;
+
 export const DeleteButton = styled.button`
   position: absolute;
   top: 15px;
   right: 10px;
-  background-color: rgba(128, 128, 128, 0.2); /* Light grey with transparency */
-  color: white;
+  background-color: transparent; /* Fully transparent background */
+  color: #ffffff; /* White text color */
   padding: 5px;
   width: 7rem;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for visibility */
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
@@ -70,10 +71,17 @@ export const DeleteButton = styled.button`
   font-weight: 500;
   transition:
     background-color 0.3s ease,
-    transform 0.3s ease;
+    transform 0.3s ease,
+    border-color 0.3s ease;
 
   &:hover {
-    background-color: rgba(85, 85, 85, 0.3); /* Darker grey with transparency */
+    background-color: rgba(
+      0,
+      128,
+      128,
+      0.3
+    ); /* Teal with transparency on hover */
+    border-color: rgba(0, 128, 128, 0.5); /* Darken the border on hover */
     transform: scale(1.05);
   }
 
@@ -92,7 +100,7 @@ export const ModalWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   z-index: 1000;
   overflow-y: auto;
 `;
@@ -106,7 +114,7 @@ export const ModalContent = styled.div`
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
   color: #ffffff;
   font-family: "Raleway", sans-serif;
   animation: slide-in 0.3s ease-out forwards;

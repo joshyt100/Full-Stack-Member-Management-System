@@ -85,8 +85,10 @@ const AddMemberModal = ({ onClose }) => {
           onChange={handleChange}
         />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button onClick={handleSubmit}>Submit</Button>
-          <Button onClick={onClose} style={{ backgroundColor: "#ff4c4c" }}>
+          <Button onClick={handleSubmit} style={{ backgroundColor: "#023020" }}>
+            Submit
+          </Button>
+          <Button onClick={onClose} style={{ backgroundColor: "" }}>
             Cancel
           </Button>
         </div>

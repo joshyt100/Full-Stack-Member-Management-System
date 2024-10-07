@@ -117,8 +117,10 @@ const UpdateMemberModal = ({ member, onClose }) => {
             marginTop: "20px",
           }}
         >
-          <Button onClick={handleUpdate}>Update</Button>
-          <Button onClick={onClose} style={{ backgroundColor: "#ff4c4c" }}>
+          <Button onClick={handleUpdate} style={{ backgroundColor: "#023020" }}>
+            Update
+          </Button>
+          <Button onClick={onClose} style={{ backgroundColor: "" }}>
             Cancel
           </Button>
         </div>
