@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ModalWrapper, ModalContent, Button } from "./StyledComponents";
+import {
+  ModalWrapper,
+  ModalContent,
+  ModalInput,
+  Button,
+  ModalSelect,
+  StyledDatePicker,
+} from "./StyledComponents";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -62,14 +69,14 @@ const UpdateMemberModal = ({ member, onClose }) => {
     <ModalWrapper>
       <ModalContent>
         <h2>Update Member</h2>
-        <input
+        <ModalInput
           type="text"
           name="name"
           placeholder="Name"
           value={updatedMember.name}
           onChange={handleChange}
         />
-        <select
+        <ModalSelect
           name="major"
           value={updatedMember.major}
           onChange={handleChange}
@@ -80,15 +87,15 @@ const UpdateMemberModal = ({ member, onClose }) => {
           <option value="Gender Studies">Gender Studies</option>
           <option value="Mechanical Engineering">Mechanical Engineering</option>
           <option value="Civil Engineering">Civil Engineering</option>
-        </select>
-        <input
+        </ModalSelect>
+        <ModalInput
           type="text"
           name="bio"
           placeholder="Bio"
           value={updatedMember.bio}
           onChange={handleChange}
         />
-        <DatePicker
+        <StyledDatePicker
           selected={updatedMember.gradDate}
           onChange={handleDateChange}
           dateFormat="MMMM d, yyyy"
@@ -96,7 +103,7 @@ const UpdateMemberModal = ({ member, onClose }) => {
           isClearable={false} // Since gradDate is required
           placeholderText="Select Graduation Date"
         />
-        <input
+        <ModalInput
           type="text"
           name="role"
           placeholder="Role"

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import DatePicker from "react-datepicker";
+
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -36,7 +38,7 @@ export const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  margin: 10px 0;
+  margin: 0px 0;
   font-family: "Raleway", sans-serif; /* Apply Raleway font */
   font-weight: 500; /* Medium weight for buttons */
   transition:
@@ -52,25 +54,26 @@ export const Button = styled.button`
     transform: scale(0.95);
   }
 `;
-
 export const DeleteButton = styled.button`
-  background-color: #cbc3e3; /* Slightly lighter dark gray */
-  color: #black;
-  margin-right: 20px;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  background-color: rgba(128, 128, 128, 0.2); /* Light grey with transparency */
+  color: white;
   padding: 5px;
   width: 7rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 500; /* Medium weight */
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
   transition:
     background-color 0.3s ease,
     transform 0.3s ease;
 
   &:hover {
-    background-color: #555555; /* Lighter gray */
+    background-color: rgba(85, 85, 85, 0.3); /* Darker grey with transparency */
     transform: scale(1.05);
   }
 
@@ -88,25 +91,26 @@ export const ModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.4); /* Dark semi-transparent backdrop */
-  backdrop-filter: blur(10px); /* Stronger blur effect for background content */
-  z-index: 1000; /* Ensure modal is above all other content */
-  overflow-y: auto; /* Allows scrolling for long content */
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  overflow-y: auto;
 `;
 
 export const ModalContent = styled.div`
-  background-color: rgba(28, 28, 28, 0.5); /* Dark and more transparent */
+  background-color: rgba(28, 28, 28, 0.5);
   padding: 40px;
   border-radius: 10px;
-  width: 70%; /* Wider modal */
-  max-width: 700px; /* Sets a reasonable maximum width */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* Adjusted shadow for a softer 3D effect */
+  width: 70%;
+  max-width: 700px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  color: #ffffff; /* White text for readability */
-  font-family: "Raleway", sans-serif; /* Consistent font usage */
-  animation: slide-in 0.3s ease-out forwards; /* Smooth slide-in animation */
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+  animation: slide-in 0.3s ease-out forwards;
+
   @keyframes slide-in {
     from {
       transform: translateY(-50px);
@@ -118,84 +122,132 @@ export const ModalContent = styled.div`
     }
   }
 `;
+
 export const MemberItem = styled.li`
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 2fr; // Two columns with a ratio to provide space for content
-  align-items: center; // Centers items vertically within each grid cell
-  gap: 10px; // Space between grid columns
-  padding: 15px; // Padding around the content inside each item
-  margin-bottom: 10px; // Margin below each item for spacing in lists
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "name"
+    "bio"
+    "info"
+    "year"
+    "major";
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
   background: linear-gradient(
-    135deg,
-    #1a1a1a,
-    #3a3a3a
-  ); // Dark gray gradient for a modern, sleek look
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.1
-  ); // Additional background color for depth effect
-  border: 1px solid #222222; // Subtle border matching the dark theme
-  border-radius: 12px; // Increased border-radius for more rounded corners
+    to bottom,
+    #0f0f11,
+    /* Predominantly black at the top */ #0f1f1a 70%,
+    /* Very subtle transition to dark green */ #163a2e 90%
+      /* Subtle green accent towards the bottom */
+  ); /* Subtle gradient from black to dark green */
+  border: 1px solid rgba(35, 55, 45, 0.4); /* Subtle greenish border for depth */
+  border-radius: 15px;
   box-shadow:
-    0 2px 4px rgba(255, 255, 255, 0.1),
-    // Subtle shadow for depth
-    0 4px 8px rgba(
-        255,
-        255,
-        255,
-        0.2
-      ) inset; // Inset shadow for an inner glow effect
-  font-family: "Raleway", sans-serif; // Consistent font usage for UI uniformity
-  color: #ffffff; // White text to contrast against the dark background
-  transition: all 0.3s ease; // Smooth transition for hover effects
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08); /* Inner shadow for a polished look */
+  transition: all 0.4s ease;
 
   &:hover {
-    transform: translateY(
-      -5px
-    ); // Elevates the item slightly on hover for a dynamic feel
+    transform: translateY(-7px);
+    background: linear-gradient(
+      to bottom,
+      #0c0d0d,
+      /* Even darker blackish tone at the top on hover */ #0f2a1f 70%,
+      /* Darker green closer to black */ #224b3c 90%
+        /* Dark green near the bottom */
+    ); /* Hover effect with a bit more green */
     box-shadow:
-      0 8px 16px rgba(255, 255, 255, 0.3),
-      // More prominent shadow on hover for visual feedback
-      0 6px 12px rgba(
-          255,
-          255,
-          255,
-          0.25
-        ) inset; // Strengthened inset shadow for added depth on hover
+      0 12px 25px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(50, 140, 110, 0.5); /* Soft green glow */
+    border-color: rgba(50, 140, 110, 0.4); /* Subtle green border on hover */
   }
-`;
 
-export const MemberDetail = styled.div`
-  padding: 5px;
-  font-size: 0.9rem;
-  color: #ffffff; /* White text for readability */
-  line-height: 1.4;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-`;
-
-export const DetailLabel = styled.span`
-  font-weight: bold;
-  color: #cccccc; /* Light gray for labels */
-  margin-right: 10px;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
+  /* Text and Content Styles */
+  color: #d0e3d0; /* Light gray-green text for readability */
+  font-family: "Raleway", sans-serif; /* Consistent font usage */
 `;
 
 export const MemberName = styled.div`
-  font-size: 1.2rem;
-  color: #ffffff; /* White for strong readability */
-  flex: 1;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 600; /* Slightly bolder weight for names */
+  grid-area: name;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.8rem; /* Increased for emphasis */
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+`;
+
+export const MemberBio = styled.div`
+  grid-area: bio;
+  padding: 5px;
+  font-size: 1rem;
+  color: #ffffff;
+  line-height: 1.6;
+  font-family: "Raleway", sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  word-wrap: break-word;
+  max-height: 100px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+`;
+
+export const MemberDetail = styled.div`
+  grid-area: info;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  line-height: 1.4;
+  font-family: "Raleway", sans-serif;
+`;
+
+export const MemberYear = styled.div`
+  grid-area: year;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  line-height: 1.4;
+  font-family: "Raleway", sans-serif;
+`;
+
+export const MemberMajor = styled.div`
+  grid-area: major;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  line-height: 1.4;
+  font-family: "Raleway", sans-serif;
 `;
 
 export const MemberRole = styled.div`
   font-size: 1rem;
-  color: #f2f2f2; /* Light gray for roles */
-  flex: 1;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 400; /* Regular weight for roles */
+  color: #f2f2f2;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  text-align: left;
+`;
+
+export const DetailLabel = styled.span`
+  font-weight: bold;
+  color: #cccccc;
+  margin-right: 10px;
+  font-family: "Raleway", sans-serif;
 `;
 
 export const RoleSection = styled.div`
@@ -204,43 +256,110 @@ export const RoleSection = styled.div`
 
 export const RoleTitle = styled.h2`
   font-size: 1.5rem;
-  color: #ffffff; /* White for readability */
+  color: #ffffff;
   margin-bottom: 10px;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 700; /* Bold weight for titles */
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
 `;
 
 export const NameTitle = styled.h2`
   font-size: 1.5rem;
-  color: #ffffff; /* White for readability */
+  color: #ffffff;
   margin-bottom: 10px;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 700; /* Bold weight */
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
 `;
 
 export const SearchInput = styled.input`
-  padding: 8px 12px; /* Sleek padding */
-  border: 1px solid #444444; /* Dark gray border */
+  padding: 8px 12px;
+  border: 1px solid #444444;
   border-radius: 4px;
-  width: 50%; /* Adjust width to make it more compact */
-  background-color: #1a1a1a; /* Dark background */
-  color: #ffffff; /* White text for readability */
-  font-family: "Raleway", sans-serif; /* Use Raleway font */
-  font-size: 0.9rem; /* Slightly smaller font size */
+  width: 30%;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
-  margin-left: auto; /* Pushes the search bar to the right */
-  margin-bottom: 1rem;
-  display: block; /* Ensure it's a block element for margin adjustments */
+  margin-left: auto;
+  margin-bottom: 10px;
+  display: block;
 
   &:hover {
-    border-color: #666666; /* Lighten border on hover */
+    border-color: #666666;
   }
 
   &:focus {
-    outline: none; /* Remove default outline */
-    border-color: #ffffff; /* White border on focus */
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Soft glow on focus */
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  }
+`;
+
+export const ModalInput = styled.input`
+  width: 95%; /* Full width for consistency */
+  padding: 12px 15px; /* Comfortable padding for easy input */
+  border: 1px solid #444; /* Subtle border for separation */
+  border-radius: 6px; /* Slight rounding for smoothness */
+  background-color: #1a1a1a; /* Dark background to match modal theme */
+  color: #ffffff; /* White text for readability */
+  font-size: 1rem; /* Consistent font size */
+  font-family: "Raleway", sans-serif; /* Matching font family */
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transitions */
+
+  &:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #888; /* Lighter border on focus */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* Soft glow effect */
+  }
+
+  &::placeholder {
+    color: #999; /* Light gray placeholder for subtle hint */
+    opacity: 0.8;
+  }
+`;
+
+// ModalSelect styling for dropdown
+export const ModalSelect = styled.select`
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: "Raleway", sans-serif;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #888;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+`;
+
+// StyledDatePicker styling for date picker
+export const StyledDatePicker = styled(DatePicker)`
+  padding: 12px 15px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  width: 95%;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: "Raleway", sans-serif;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #888;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
   }
 `;

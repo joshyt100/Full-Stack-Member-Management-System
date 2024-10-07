@@ -6,7 +6,10 @@ import {
   MemberLabel,
   MemberName,
   MemberRole,
+  MemberMajor,
+  MemberYear,
   MemberDetail,
+  MemberBio,
   DetailLabel,
   RoleSection,
   DeleteButton,
@@ -87,15 +90,15 @@ const MemberList = () => {
               <MemberName>
                 <DetailLabel></DetailLabel> {member.name}
               </MemberName>
-              <MemberDetail>
+              <MemberMajor>
                 <DetailLabel>Major:</DetailLabel> {member.major}
-              </MemberDetail>
-              <MemberDetail>
+              </MemberMajor>
+              <MemberBio>
                 <DetailLabel>Bio:</DetailLabel> {member.bio}
-              </MemberDetail>
-              <MemberDetail>
+              </MemberBio>
+              <MemberYear>
                 <DetailLabel>Graduation Year:</DetailLabel> {member.gradDate}
-              </MemberDetail>
+              </MemberYear>
               <MemberRole>
                 <DetailLabel>Role:</DetailLabel> {member.role}
               </MemberRole>

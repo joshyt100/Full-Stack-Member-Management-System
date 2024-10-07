@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for the date picker
-import { ModalWrapper, ModalContent, Button } from "./StyledComponents";
+import {
+  ModalWrapper,
+  ModalContent,
+  ModalInput,
+  ModalSelect,
+  StyledDatePicker,
+  Button,
+} from "./StyledComponents";
 
 const AddMemberModal = ({ onClose }) => {
   const [member, setMember] = useState({
@@ -42,35 +49,35 @@ const AddMemberModal = ({ onClose }) => {
     <ModalWrapper>
       <ModalContent>
         <h2>Add Member</h2>
-        <input
+        <ModalInput
           type="text"
           name="name"
           placeholder="Name"
           value={member.name}
           onChange={handleChange}
         />
-        <select name="major" value={member.major} onChange={handleChange}>
+        <ModalSelect name="major" value={member.major} onChange={handleChange}>
           <option value="">Select Major</option>
           <option value="Computer Science">Computer Science</option>
           <option value="Biology">Biology</option>
           <option value="Gender Studies">Gender Studies</option>
           <option value="Mechanical Engineering">Mechanical Engineering</option>
           <option value="Civil Engineering">Civil Engineering</option>
-        </select>
-        <input
+        </ModalSelect>
+        <ModalInput
           type="text"
           name="bio"
           placeholder="Bio"
           value={member.bio}
           onChange={handleChange}
         />
-        <DatePicker
+        <StyledDatePicker
           selected={member.gradDate}
           onChange={handleDateChange}
           dateFormat="MMMM d, yyyy"
           className="datepicker" // Apply custom styles if necessary
         />
-        <input
+        <ModalInput
           type="text"
           name="role"
           placeholder="Role"

@@ -19,12 +19,18 @@ function App() {
 
   return (
     <PageWrapper>
-      <Title>Member and Project Dashboard</Title>
+      <Title style={{ color: "#808080", marginBottom: "-10px" }}>
+        Member and Project Dashboard
+      </Title>
 
       {/* Section for Members */}
       <Section>
-        <h2 style={{ color: "white" }}>Members</h2>
-        <Button onClick={() => setShowAddMemberModal(true)}>Add Member</Button>
+        <Button
+          style={{ marginBottom: "-10000px" }}
+          onClick={() => setShowAddMemberModal(true)}
+        >
+          Add Member
+        </Button>
         <MemberList /> {/* No need to pass onMemberClick */}
       </Section>
 
