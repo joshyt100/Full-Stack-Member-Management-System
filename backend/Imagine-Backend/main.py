@@ -1,3 +1,5 @@
+import os
+import json
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -5,8 +7,6 @@ from fastapi.responses import HTMLResponse
 import firebase_admin
 from firebase_admin import credentials
 from fastapi.middleware.cors import CORSMiddleware
-import os
-import json
 
 
 # from fastapi.middleware.cors import CORSMiddleware  # Import CORS middleware
