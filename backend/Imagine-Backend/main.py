@@ -5,13 +5,15 @@ from fastapi.responses import HTMLResponse
 import firebase_admin
 from firebase_admin import credentials
 from fastapi.middleware.cors import CORSMiddleware
+import os
+import json
 
 
 # from fastapi.middleware.cors import CORSMiddleware  # Import CORS middleware
-
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate("other.json")
+firebase_credentials = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
+cred = credentials.Certificate(firebase_credentials)
 firebase_admin.initialize_app(cred)
+
 
 app = FastAPI()
 
