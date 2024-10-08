@@ -10,12 +10,14 @@ import {
   RemoveMemberButton,
 } from "./ProjectStyledComponents";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const AddProjectModal = ({ onClose }) => {
   const [project, setProject] = useState({
     name: "",
     description: "",
     url: "",
-    members: [], // Initialize as an empty array
+    members: [],
   });
 
   const [newMemberName, setNewMemberName] = useState("");
@@ -37,7 +39,7 @@ const AddProjectModal = ({ onClose }) => {
 
   const handleSubmit = () => {
     axios
-      .post("/projects", project)
+      .post(`${apiUrl}/projects`, project)
       .then(() => {
         alert("Project added successfully!");
         onClose();
@@ -95,7 +97,6 @@ const AddProjectModal = ({ onClose }) => {
                   <RemoveMemberButton
                     type="button"
                     onClick={() => {
-                      // Remove the member from the list
                       setProject({
                         ...project,
                         members: project.members.filter((_, i) => i !== index),

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for the date picker
+import "react-datepicker/dist/react-datepicker.css";
 import {
   ModalWrapper,
   ModalContent,
@@ -11,12 +11,14 @@ import {
   Button,
 } from "./StyledComponents";
 
+const apiUrl = process.env.REACT_APP_API_URL || ""; // Use an empty string as a fallback
+
 const AddMemberModal = ({ onClose }) => {
   const [member, setMember] = useState({
     name: "",
     major: "",
     bio: "",
-    gradDate: new Date(), // Use a Date object for the graduation date
+    gradDate: new Date(),
     role: "",
   });
 
@@ -25,17 +27,17 @@ const AddMemberModal = ({ onClose }) => {
   };
 
   const handleDateChange = (date) => {
-    setMember({ ...member, gradDate: date }); // Keep it as a Date object
+    setMember({ ...member, gradDate: date });
   };
 
   const handleSubmit = () => {
     const formattedMember = {
       ...member,
-      gradDate: member.gradDate.toISOString().split("T")[0], // Format as 'YYYY-MM-DD'
+      gradDate: member.gradDate.toISOString().split("T")[0],
     };
 
     axios
-      .post("/members", formattedMember)
+      .post(`${apiUrl}/members`, formattedMember) // Use apiUrl for the endpoint
       .then(() => {
         alert("Member added successfully!");
         onClose();
@@ -75,7 +77,7 @@ const AddMemberModal = ({ onClose }) => {
           selected={member.gradDate}
           onChange={handleDateChange}
           dateFormat="MMMM d, yyyy"
-          className="datepicker" // Apply custom styles if necessary
+          className="datepicker"
         />
         <ModalInput
           type="text"

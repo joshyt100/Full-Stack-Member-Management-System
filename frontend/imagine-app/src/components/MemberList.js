@@ -17,6 +17,8 @@ import {
 } from "./StyledComponents";
 import UpdateMemberModal from "./UpdateMemberModal";
 
+const apiUrl = process.env.REACT_APP_API_URL; // Base URL for the API
+
 const MemberList = () => {
   const [members, setMembers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,7 +27,7 @@ const MemberList = () => {
 
   const fetchMembers = () => {
     axios
-      .get("/members")
+      .get(`${apiUrl}/members`)
       .then((response) => {
         setMembers(response.data);
       })
@@ -40,7 +42,7 @@ const MemberList = () => {
 
   const deleteMember = (memberId) => {
     axios
-      .delete(`/members/${memberId}`)
+      .delete(`${apiUrl}/members/${memberId}`)
       .then(() => {
         setMembers(members.filter((member) => member.id !== memberId));
         alert("Member deleted successfully");
@@ -88,7 +90,7 @@ const MemberList = () => {
           <RoleSection key={member.id}>
             <MemberItem onClick={() => openUpdateModal(member)}>
               <MemberName>
-                <DetailLabel></DetailLabel> {member.name}
+                <DetailLabel>Name:</DetailLabel> {member.name}
               </MemberName>
               <MemberMajor>
                 <DetailLabel>Major:</DetailLabel> {member.major}

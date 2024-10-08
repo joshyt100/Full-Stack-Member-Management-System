@@ -16,6 +16,8 @@ import {
 import UpdateProjectModal from "./UpdateProjectModal";
 import MemberInfoModal from "./MemberInfoModal";
 
+const apiUrl = process.env.REACT_APP_API_URL; // Set up your backend API URL here
+
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,7 +28,7 @@ const ProjectList = () => {
 
   const fetchProjects = () => {
     axios
-      .get("/projects")
+      .get(`${apiUrl}/projects`)
       .then((response) => {
         setProjects(response.data);
       })
@@ -41,7 +43,7 @@ const ProjectList = () => {
 
   const deleteProject = (projectId) => {
     axios
-      .delete(`/projects/${projectId}`)
+      .delete(`${apiUrl}/projects/${projectId}`)
       .then(() => {
         setProjects(projects.filter((project) => project.id !== projectId));
         alert("Project deleted successfully");
@@ -63,12 +65,12 @@ const ProjectList = () => {
 
   const handleModalClose = () => {
     setShowUpdateModal(false);
-    fetchProjects();
+    fetchProjects(); // Refresh projects after update
   };
 
   const handleMemberClick = (memberName) => {
     axios
-      .get(`/get_member_by_name?member_name=${memberName}`)
+      .get(`${apiUrl}/get_member_by_name?member_name=${memberName}`)
       .then((response) => {
         if (response.data.length > 0) {
           setSelectedMember(response.data[0]);

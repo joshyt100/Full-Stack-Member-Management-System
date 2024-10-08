@@ -11,6 +11,8 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+const apiUrl = process.env.REACT_APP_API_URL; // Base URL for the API
+
 const UpdateMemberModal = ({ member, onClose }) => {
   const parseDate = (dateString) => {
     if (!dateString) return null;
@@ -34,7 +36,7 @@ const UpdateMemberModal = ({ member, onClose }) => {
   const handleDateChange = (date) => {
     setUpdatedMember({
       ...updatedMember,
-      gradDate: date, // Keep as Date object
+      gradDate: date,
     });
   };
 
@@ -45,12 +47,12 @@ const UpdateMemberModal = ({ member, onClose }) => {
     const memberData = {
       ...updatedMember,
       gradDate: adjustedGradDate
-        ? adjustedGradDate.toISOString().split("T")[0] // Format as 'YYYY-MM-DD'
+        ? adjustedGradDate.toISOString().split("T")[0]
         : null,
     };
 
     axios
-      .put(`/members/${updatedMember.id}`, memberData)
+      .put(`${apiUrl}/members/${updatedMember.id}`, memberData)
       .then(() => {
         alert("Member updated successfully!");
         onClose();
@@ -100,7 +102,7 @@ const UpdateMemberModal = ({ member, onClose }) => {
           onChange={handleDateChange}
           dateFormat="MMMM d, yyyy"
           className="datepicker"
-          isClearable={false} // Since gradDate is required
+          isClearable={false}
           placeholderText="Select Graduation Date"
         />
         <ModalInput

@@ -10,6 +10,8 @@ import {
   RemoveMemberButton,
 } from "./ProjectStyledComponents";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const UpdateProjectModal = ({ project, onClose }) => {
   const [updatedProject, setUpdatedProject] = useState({
     ...project,
@@ -42,7 +44,7 @@ const UpdateProjectModal = ({ project, onClose }) => {
 
   const handleUpdate = () => {
     axios
-      .put(`/projects/${updatedProject.id}`, updatedProject)
+      .put(`${apiUrl}/projects/${updatedProject.id}`, updatedProject)
       .then(() => {
         alert("Project updated successfully!");
         onClose();
