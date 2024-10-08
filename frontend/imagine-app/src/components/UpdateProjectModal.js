@@ -7,16 +7,14 @@ import {
   ProjectButton,
 } from "./ProjectStyledComponents";
 
-const AddProjectModal = ({ onClose }) => {
-  const [project, setProject] = useState({
-    name: "",
-    description: "",
-    url: "",
-    members: [], // Initialize as an empty array
+const UpdateProjectModal = ({ project, onClose }) => {
+  const [updatedProject, setUpdatedProject] = useState({
+    ...project,
+    members: Array.isArray(project.members) ? project.members : [], // Ensure members is an array
   });
 
   const handleChange = (e) => {
-    setProject({ ...project, [e.target.name]: e.target.value });
+    setUpdatedProject({ ...updatedProject, [e.target.name]: e.target.value });
   };
 
   const handleMembersChange = (e) => {
@@ -24,51 +22,60 @@ const AddProjectModal = ({ onClose }) => {
       .split(",")
       .map((member) => member.trim())
       .filter((member) => member);
-    setProject({ ...project, members: membersArray });
+    setUpdatedProject({ ...updatedProject, members: membersArray });
   };
 
-  const handleSubmit = () => {
+  const handleUpdate = () => {
     axios
-      .post("/projects", project)
+      .put(`/projects/${updatedProject.id}`, updatedProject)
       .then(() => {
-        alert("Project added successfully!");
+        alert("Project updated successfully!");
         onClose();
       })
       .catch((error) => {
-        console.error("Error adding project:", error);
+        console.error("Error updating project:", error);
+        alert(
+          `Failed to update project: ${
+            error.response ? error.response.data.detail : "No server response"
+          }`,
+        );
       });
   };
 
   return (
     <ProjectModalWrapper>
       <ProjectModalContent>
-        <h2>Add Project</h2>
+        <h2>Update Project</h2>
         <ProjectInput
           type="text"
           name="name"
           placeholder="Project Name"
-          value={project.name}
+          value={updatedProject.name}
           onChange={handleChange}
         />
         <ProjectInput
           type="text"
           name="description"
           placeholder="Description"
-          value={project.description}
+          value={updatedProject.description}
           onChange={handleChange}
         />
         <ProjectInput
           type="url"
           name="url"
           placeholder="Project URL"
-          value={project.url}
+          value={updatedProject.url}
           onChange={handleChange}
         />
         <ProjectInput
           type="text"
           name="members"
           placeholder="Members (comma-separated)"
-          value={project.members.join(", ")}
+          value={
+            Array.isArray(updatedProject.members)
+              ? updatedProject.members.join(", ")
+              : ""
+          }
           onChange={handleMembersChange}
         />
         <div
@@ -78,7 +85,7 @@ const AddProjectModal = ({ onClose }) => {
             marginTop: "20px",
           }}
         >
-          <ProjectButton onClick={handleSubmit}>Submit</ProjectButton>
+          <ProjectButton onClick={handleUpdate}>Update</ProjectButton>
           <ProjectButton
             onClick={onClose}
             style={{ backgroundColor: "#ff4c4c" }}
@@ -91,4 +98,4 @@ const AddProjectModal = ({ onClose }) => {
   );
 };
 
-export default AddProjectModal;
+export default UpdateProjectModal;

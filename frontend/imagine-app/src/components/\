@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   ProjectItem,
+  ProjectLabel,
   ProjectName,
   ProjectDescription,
-  ProjectURL,
-  ProjectMembers,
+  ProjectDates,
+  ProjectStatus,
+  DetailLabel,
+  ProjectSection,
   ProjectDeleteButton,
   ProjectSearchInput,
 } from "./ProjectStyledComponents";
@@ -49,22 +52,26 @@ const ProjectList = () => {
       });
   };
 
+  // Function to open the modal and pass the selected project
   const openUpdateModal = (project) => {
     setSelectedProject(project);
     setShowUpdateModal(true);
   };
 
+  // Function to handle closing the modal and refreshing the project list
   const handleModalClose = () => {
     setShowUpdateModal(false);
-    fetchProjects();
+    fetchProjects(); // Refresh the projects list after updating
   };
 
+  // Filter projects based on the search query
   const filteredProjects = projects.filter((project) =>
-    project.name?.toLowerCase().includes(searchQuery.toLowerCase()),
+    project.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
     <div>
+      {/* Search Input */}
       <ProjectSearchInput
         type="text"
         placeholder="Search projects by name"
@@ -72,45 +79,41 @@ const ProjectList = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
+      {/* Filtered project list */}
       {filteredProjects.length > 0 ? (
         filteredProjects.map((project) => (
-          <ProjectItem
-            key={project.id}
-            onClick={() => openUpdateModal(project)}
-          >
-            <ProjectName> {project.name}</ProjectName>
-            <ProjectDescription>
-              Description: {project.description}
-            </ProjectDescription>
-            <ProjectURL
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {project.url}
-            </ProjectURL>
-            <ProjectMembers>
-              Members:{" "}
-              {Array.isArray(project.members)
-                ? project.members.join(", ")
-                : project.members
-                  ? project.members
-                  : "No members"}
-            </ProjectMembers>
-            <ProjectDeleteButton
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteProject(project.id);
-              }}
-            >
-              Delete
-            </ProjectDeleteButton>
-          </ProjectItem>
+          <ProjectSection key={project.id}>
+            <ProjectItem onClick={() => openUpdateModal(project)}>
+              <ProjectName>
+                <DetailLabel>Name:</DetailLabel> {project.name}
+              </ProjectName>
+              <ProjectDescription>
+                <DetailLabel>Description:</DetailLabel> {project.description}
+              </ProjectDescription>
+              <ProjectDates>
+                <DetailLabel>Dates:</DetailLabel> {project.startDate} -{" "}
+                {project.endDate}
+              </ProjectDates>
+              <ProjectStatus>
+                <DetailLabel>Status:</DetailLabel> {project.status}
+              </ProjectStatus>
+              {/* Prevent the delete button click from opening the update modal */}
+              <ProjectDeleteButton
+                onClick={(e) => {
+                  e.stopPropagation(); // Stop the event from bubbling up
+                  deleteProject(project.id);
+                }}
+              >
+                Delete
+              </ProjectDeleteButton>
+            </ProjectItem>
+          </ProjectSection>
         ))
       ) : (
         <p>No projects found.</p>
       )}
 
+      {/* Update Project Modal */}
       {showUpdateModal && selectedProject && (
         <UpdateProjectModal
           project={selectedProject}

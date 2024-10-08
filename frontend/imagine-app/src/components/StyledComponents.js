@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import "cal-sans";
 
 import DatePicker from "react-datepicker";
 
@@ -9,44 +10,46 @@ export const PageWrapper = styled.div`
   padding: 20px;
   background-color: #000000; /* Full black background */
   min-height: 100vh;
-  font-family: "Raleway", Arial, sans-serif; /* Apply Raleway font */
+  font-family: "Raleway", Arial, sans-serif;
 `;
 
 export const Title = styled.h1`
   font-size: 3rem;
+  font-family: "Cal Sans";
   color: #ffffff; /* White for readability */
-  margin-bottom: 2rem;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 700; /* Use a bold weight for emphasis */
+  margin-bottom: 0.75rem;
+
+  font-weight: 700;
 `;
 
 export const Section = styled.div`
   width: 80%;
-  margin: 20px 0;
+  margin-top: -15px;
+  //margin: 20px 0;
   padding: 20px;
   background-color: #000000; /* Keep the section background black */
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Light shadow for contrast */
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  font-family: "Raleway", sans-serif;
 `;
 
 export const Button = styled.button`
-  background-color: #222222; /* Darker gray for buttons */
+  background-color: #222222;
   color: #ffffff; /* White text */
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  margin: 0px 0;
-  font-family: "Raleway", sans-serif; /* Apply Raleway font */
-  font-weight: 500; /* Medium weight for buttons */
+  margin-top: 0px 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
   transition:
     background-color 0.3s ease,
     transform 0.3s ease;
 
   &:hover {
-    background-color: #444444; /* Slightly lighter gray */
+    background-color: #444444;
     transform: scale(1.05);
   }
 
@@ -130,7 +133,6 @@ export const ModalContent = styled.div`
     }
   }
 `;
-
 export const MemberItem = styled.li`
   position: relative;
   display: grid;
@@ -186,11 +188,15 @@ export const MemberName = styled.div`
   justify-self: center;
   font-size: 1.8rem; /* Increased for emphasis */
   color: #ffffff;
-  font-family: "Raleway", sans-serif;
+  font-family: "Cal Sans";
   font-weight: bold;
   text-align: center;
-  width: 100%;
+  max-width: 50%; /* Limit width to prevent overlap with the delete button */
   margin: 0;
+  padding-right: 2rem; /* Add padding to prevent text from hitting the button */
+  overflow-wrap: break-word; /* Wrap long words to avoid overflow */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* Allows text to wrap inside the bounds */
 `;
 
 export const MemberBio = styled.div`
@@ -291,7 +297,8 @@ export const SearchInput = styled.input`
     border-color 0.3s ease,
     box-shadow 0.3s ease;
   margin-left: auto;
-  margin-bottom: 10px;
+  margin-top: -25px;
+  margin-bottom: 50px;
   display: block;
 
   &:hover {

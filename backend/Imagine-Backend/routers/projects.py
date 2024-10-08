@@ -15,9 +15,13 @@ class Project(BaseModel):
 
     @validator("members", pre=True)
     def validate_members(cls, value):
-        if isinstance(value, List):
-            return value.split(",")
-        return value
+        if isinstance(value, str):
+            # Split the string into a list
+            return [member.strip() for member in value.split(",") if member.strip()]
+        elif isinstance(value, list):
+            return value
+        else:
+            return []
 
     def to_dict(self):
         return {
@@ -75,7 +79,7 @@ def create_project(project: Project):
     return "Project added successfully"
 
 
-@router.put("projects/project_id")
+@router.put("/projects/{project_id}")
 def update_projects(project_id: str, project: Project):
     doc = db.collection("projects").document(project_id)
     get_doc = doc.get()
