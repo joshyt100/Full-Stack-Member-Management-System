@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import DatePicker from "react-datepicker";
+import styled, { keyframes } from "styled-components";
 
 export const ProjectPageWrapper = styled.div`
   display: flex;
@@ -25,32 +24,42 @@ export const ProjectItem = styled.li`
   gap: 12px;
   padding: 20px;
   margin-bottom: 15px;
-  background: linear-gradient(to bottom, #1f1f23, #2b2b30 70%, #4a4a52 90%);
-  border: 1px solid rgba(45, 45, 55, 0.5);
+  background: linear-gradient(to bottom, #000000, #002e2e 60%, #004040 85%);
+  border: 1px solid rgba(20, 45, 45, 0.5);
   border-radius: 15px;
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition: all 0.4s ease;
 
   &:hover {
     transform: translateY(-7px);
-    background: linear-gradient(to bottom, #1a1a1e, #28282e 70%, #3c3c46 90%);
+    background: linear-gradient(to bottom, #000000, #003d3d 60%, #006060 85%);
     box-shadow:
       0 12px 25px rgba(0, 0, 0, 0.3),
-      0 0 12px rgba(90, 90, 100, 0.5);
-    border-color: rgba(70, 70, 80, 0.5);
+      0 0 12px rgba(50, 160, 160, 0.5);
+    border-color: rgba(0, 90, 90, 0.5);
   }
 
-  color: #d0e3d0;
+  color: #66cccc; /* Subdued turquoise for cohesive appearance */
   font-family: "Raleway", sans-serif;
 `;
 
 export const ProjectName = styled.div`
   grid-area: name;
-  font-size: 1.5rem;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.8rem; /* Increased for emphasis */
   color: #ffffff;
+  font-family: "Cal Sans";
   font-weight: bold;
+  text-align: center;
+  max-width: 50%; /* Limit width to prevent overlap with the delete button */
+  margin: 0;
+  padding-right: 2rem; /* Add padding to prevent text from hitting the button */
+  overflow-wrap: break-word; /* Wrap long words to avoid overflow */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* Allows text to wrap inside the bounds */
 `;
 
 export const ProjectDescription = styled.div`
@@ -75,12 +84,30 @@ export const ProjectURL = styled.a`
   line-height: 1.4;
   text-decoration: underline;
 `;
-
 export const ProjectMembers = styled.div`
   grid-area: members;
   font-size: 1rem;
   color: #e0e0e0;
-  line-height: 1.4;
+  background-color: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+
+  &:hover {
+    background-color: #333333;
+    color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 export const ProjectInput = styled.input`
@@ -101,9 +128,8 @@ export const ProjectInput = styled.input`
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
   }
 `;
-
 export const ProjectButton = styled.button`
-  background-color: #222222;
+  background-color: #065465; /* Turquoise color */
   color: #ffffff;
   padding: 10px 20px;
   border: none;
@@ -117,12 +143,17 @@ export const ProjectButton = styled.button`
     transform 0.3s ease;
 
   &:hover {
-    background-color: #444444;
+    background-color: #5abce1; /* Slightly darker turquoise for hover effect */
     transform: scale(1.05);
   }
 
   &:active {
     transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: none;
+    border: 1px solid #80d4ff;
   }
 `;
 
@@ -202,25 +233,9 @@ export const ProjectModalWrapper = styled.div`
   overflow-y: auto;
 `;
 
-// Modal Content
-export const ProjectModalContent = styled.div`
-  background-color: rgba(28, 28, 28, 0.5);
-  padding: 40px;
-  border-radius: 10px;
-  width: 70%;
-  max-width: 700px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  color: #ffffff;
-  font-family: "Raleway", sans-serif;
-  animation: slide-in 0.3s ease-out forwards;
-`;
-
 // Modal Close Button
 export const ModalCloseButton = styled.button`
-  background-color: #222222;
+  background-color: teal;
   color: #ffffff;
   padding: 10px 20px;
   border: none;
@@ -245,25 +260,6 @@ export const ModalCloseButton = styled.button`
 `;
 
 // Member Button (used in ProjectList)
-export const MemberButton = styled.button`
-  background-color: transparent;
-  color: #80d4ff;
-  border: none;
-  cursor: pointer;
-  margin-right: 5px;
-  font-size: 1rem;
-  padding: 0;
-  font-family: "Raleway", sans-serif;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: #a0e1ff;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
 
 // ... existing imports and styled components
 
@@ -286,7 +282,7 @@ export const MemberListItem = styled.li`
 
 export const RemoveMemberButton = styled.button`
   background-color: transparent;
-  color: #ff4c4c;
+  color: red;
   border: none;
   margin-left: 10px;
   cursor: pointer;
@@ -296,4 +292,31 @@ export const RemoveMemberButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const slideInAnimation = keyframes`
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+// Apply the animation to ProjectModalContent
+export const ProjectModalContent = styled.div`
+  background-color: rgba(28, 28, 28, 0.5);
+  padding: 40px;
+  border-radius: 10px;
+  width: 70%;
+  max-width: 700px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+  animation: ${slideInAnimation} 0.3s ease-out forwards;
 `;

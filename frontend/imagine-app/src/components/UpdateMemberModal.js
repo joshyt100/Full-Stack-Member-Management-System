@@ -120,7 +120,7 @@ const UpdateMemberModal = ({ member, onClose }) => {
           <Button onClick={handleUpdate} style={{ backgroundColor: "#023020" }}>
             Update
           </Button>
-          <Button onClick={onClose} style={{ backgroundColor: "" }}>
+          <Button onClick={onClose} style={{ backgroundColor: "grey" }}>
             Cancel
           </Button>
         </div>

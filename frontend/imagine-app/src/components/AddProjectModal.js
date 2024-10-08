@@ -118,10 +118,7 @@ const AddProjectModal = ({ onClose }) => {
           }}
         >
           <ProjectButton onClick={handleSubmit}>Submit</ProjectButton>
-          <ProjectButton
-            onClick={onClose}
-            style={{ backgroundColor: "#ff4c4c" }}
-          >
+          <ProjectButton onClick={onClose} style={{ backgroundColor: "grey" }}>
             Cancel
           </ProjectButton>
         </div>

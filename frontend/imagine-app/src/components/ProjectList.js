@@ -5,11 +5,14 @@ import {
   ProjectName,
   ProjectDescription,
   ProjectURL,
-  ProjectMembers,
   ProjectDeleteButton,
   ProjectSearchInput,
-  MemberButton,
 } from "./ProjectStyledComponents";
+import {
+  ProjectMembers,
+  MemberButton,
+  MemberLabel,
+} from "./ProjectMembersStyledComponents";
 import UpdateProjectModal from "./UpdateProjectModal";
 import MemberInfoModal from "./MemberInfoModal";
 
@@ -18,8 +21,8 @@ const ProjectList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedMember, setSelectedMember] = useState(null);
   const [showMemberModal, setShowMemberModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
 
   const fetchProjects = () => {
     axios
@@ -65,18 +68,15 @@ const ProjectList = () => {
 
   const handleMemberClick = (memberName) => {
     axios
-      .get(`/get_member_by_name?member_name=${encodeURIComponent(memberName)}`)
+      .get(`/get_member_by_name?member_name=${memberName}`)
       .then((response) => {
         if (response.data.length > 0) {
           setSelectedMember(response.data[0]);
           setShowMemberModal(true);
-        } else {
-          alert("Member not found.");
         }
       })
       .catch((error) => {
-        console.error("Error fetching member:", error);
-        alert("Error fetching member information.");
+        console.error("Error fetching member details:", error);
       });
   };
 
@@ -114,7 +114,7 @@ const ProjectList = () => {
               {project.url}
             </ProjectURL>
             <ProjectMembers>
-              Members:&nbsp;
+              <MemberLabel>Members:</MemberLabel>
               {Array.isArray(project.members) && project.members.length > 0 ? (
                 project.members.map((memberName, index) => (
                   <MemberButton

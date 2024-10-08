@@ -122,10 +122,7 @@ const UpdateProjectModal = ({ project, onClose }) => {
           }}
         >
           <ProjectButton onClick={handleUpdate}>Update</ProjectButton>
-          <ProjectButton
-            onClick={onClose}
-            style={{ backgroundColor: "#ff4c4c" }}
-          >
+          <ProjectButton onClick={onClose} style={{ backgroundColor: "grey" }}>
             Cancel
           </ProjectButton>
         </div>
