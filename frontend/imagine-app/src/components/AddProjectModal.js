@@ -5,6 +5,9 @@ import {
   ProjectModalContent,
   ProjectInput,
   ProjectButton,
+  MemberListContainer,
+  MemberListItem,
+  RemoveMemberButton,
 } from "./ProjectStyledComponents";
 
 const AddProjectModal = ({ onClose }) => {
@@ -15,16 +18,21 @@ const AddProjectModal = ({ onClose }) => {
     members: [], // Initialize as an empty array
   });
 
+  const [newMemberName, setNewMemberName] = useState("");
+
   const handleChange = (e) => {
     setProject({ ...project, [e.target.name]: e.target.value });
   };
 
-  const handleMembersChange = (e) => {
-    const membersArray = e.target.value
-      .split(",")
-      .map((member) => member.trim())
-      .filter((member) => member);
-    setProject({ ...project, members: membersArray });
+  const handleAddMember = (e) => {
+    e.preventDefault();
+    if (newMemberName.trim()) {
+      setProject({
+        ...project,
+        members: [...project.members, newMemberName.trim()],
+      });
+      setNewMemberName("");
+    }
   };
 
   const handleSubmit = () => {
@@ -40,8 +48,8 @@ const AddProjectModal = ({ onClose }) => {
   };
 
   return (
-    <ProjectModalWrapper>
-      <ProjectModalContent>
+    <ProjectModalWrapper onClick={onClose}>
+      <ProjectModalContent onClick={(e) => e.stopPropagation()}>
         <h2>Add Project</h2>
         <ProjectInput
           type="text"
@@ -64,13 +72,44 @@ const AddProjectModal = ({ onClose }) => {
           value={project.url}
           onChange={handleChange}
         />
-        <ProjectInput
-          type="text"
-          name="members"
-          placeholder="Members (comma-separated)"
-          value={project.members.join(", ")}
-          onChange={handleMembersChange}
-        />
+
+        {/* Member Input Field */}
+        <form onSubmit={handleAddMember}>
+          <ProjectInput
+            type="text"
+            name="newMember"
+            placeholder="Enter member name and press Enter"
+            value={newMemberName}
+            onChange={(e) => setNewMemberName(e.target.value)}
+          />
+        </form>
+
+        {/* Display List of Members */}
+        {project.members.length > 0 && (
+          <MemberListContainer>
+            <strong>Members:</strong>
+            <ul>
+              {project.members.map((member, index) => (
+                <MemberListItem key={index}>
+                  {member}
+                  <RemoveMemberButton
+                    type="button"
+                    onClick={() => {
+                      // Remove the member from the list
+                      setProject({
+                        ...project,
+                        members: project.members.filter((_, i) => i !== index),
+                      });
+                    }}
+                  >
+                    Remove
+                  </RemoveMemberButton>
+                </MemberListItem>
+              ))}
+            </ul>
+          </MemberListContainer>
+        )}
+
         <div
           style={{
             display: "flex",

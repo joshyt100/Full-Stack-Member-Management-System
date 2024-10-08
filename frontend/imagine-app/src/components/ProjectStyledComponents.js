@@ -83,36 +83,6 @@ export const ProjectMembers = styled.div`
   line-height: 1.4;
 `;
 
-export const ProjectModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  z-index: 1000;
-  overflow-y: auto;
-`;
-
-export const ProjectModalContent = styled.div`
-  background-color: rgba(28, 28, 28, 0.5);
-  padding: 40px;
-  border-radius: 10px;
-  width: 70%;
-  max-width: 700px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  color: #ffffff;
-  font-family: "Raleway", sans-serif;
-  animation: slide-in 0.3s ease-out forwards;
-`;
-
 export const ProjectInput = styled.input`
   width: 95%;
   padding: 12px 15px;
@@ -210,5 +180,120 @@ export const ProjectSearchInput = styled.input`
     outline: none;
     border-color: #ffffff;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  }
+`;
+
+// ... existing imports and styles
+
+// Ensure ModalWrapper and ModalContent are exported if they aren't already
+
+export const ProjectModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  overflow-y: auto;
+`;
+
+// Modal Content
+export const ProjectModalContent = styled.div`
+  background-color: rgba(28, 28, 28, 0.5);
+  padding: 40px;
+  border-radius: 10px;
+  width: 70%;
+  max-width: 700px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+  animation: slide-in 0.3s ease-out forwards;
+`;
+
+// Modal Close Button
+export const ModalCloseButton = styled.button`
+  background-color: #222222;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  margin-top: 20px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    background-color: #444444;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+// Member Button (used in ProjectList)
+export const MemberButton = styled.button`
+  background-color: transparent;
+  color: #80d4ff;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 1rem;
+  padding: 0;
+  font-family: "Raleway", sans-serif;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #a0e1ff;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+// ... existing imports and styled components
+
+export const MemberListContainer = styled.div`
+  margin-top: 20px;
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+`;
+
+export const MemberListItem = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+export const RemoveMemberButton = styled.button`
+  background-color: transparent;
+  color: #ff4c4c;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: "Raleway", sans-serif;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;

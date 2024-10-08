@@ -8,14 +8,18 @@ import {
   ProjectMembers,
   ProjectDeleteButton,
   ProjectSearchInput,
+  MemberButton,
 } from "./ProjectStyledComponents";
 import UpdateProjectModal from "./UpdateProjectModal";
+import MemberInfoModal from "./MemberInfoModal";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [showMemberModal, setShowMemberModal] = useState(false);
 
   const fetchProjects = () => {
     axios
@@ -59,6 +63,28 @@ const ProjectList = () => {
     fetchProjects();
   };
 
+  const handleMemberClick = (memberName) => {
+    axios
+      .get(`/get_member_by_name?member_name=${encodeURIComponent(memberName)}`)
+      .then((response) => {
+        if (response.data.length > 0) {
+          setSelectedMember(response.data[0]);
+          setShowMemberModal(true);
+        } else {
+          alert("Member not found.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching member:", error);
+        alert("Error fetching member information.");
+      });
+  };
+
+  const closeMemberModal = () => {
+    setShowMemberModal(false);
+    setSelectedMember(null);
+  };
+
   const filteredProjects = projects.filter((project) =>
     project.name?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -78,10 +104,8 @@ const ProjectList = () => {
             key={project.id}
             onClick={() => openUpdateModal(project)}
           >
-            <ProjectName> {project.name}</ProjectName>
-            <ProjectDescription>
-              Description: {project.description}
-            </ProjectDescription>
+            <ProjectName>{project.name}</ProjectName>
+            <ProjectDescription>{project.description}</ProjectDescription>
             <ProjectURL
               href={project.url}
               target="_blank"
@@ -90,12 +114,22 @@ const ProjectList = () => {
               {project.url}
             </ProjectURL>
             <ProjectMembers>
-              Members:{" "}
-              {Array.isArray(project.members)
-                ? project.members.join(", ")
-                : project.members
-                  ? project.members
-                  : "No members"}
+              Members:&nbsp;
+              {Array.isArray(project.members) && project.members.length > 0 ? (
+                project.members.map((memberName, index) => (
+                  <MemberButton
+                    key={index}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMemberClick(memberName);
+                    }}
+                  >
+                    {memberName}
+                  </MemberButton>
+                ))
+              ) : (
+                <span>No members</span>
+              )}
             </ProjectMembers>
             <ProjectDeleteButton
               onClick={(e) => {
@@ -116,6 +150,10 @@ const ProjectList = () => {
           project={selectedProject}
           onClose={handleModalClose}
         />
+      )}
+
+      {showMemberModal && selectedMember && (
+        <MemberInfoModal member={selectedMember} onClose={closeMemberModal} />
       )}
     </div>
   );

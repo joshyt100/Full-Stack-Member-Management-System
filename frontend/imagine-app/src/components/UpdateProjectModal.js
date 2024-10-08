@@ -5,6 +5,9 @@ import {
   ProjectModalContent,
   ProjectInput,
   ProjectButton,
+  MemberListContainer,
+  MemberListItem,
+  RemoveMemberButton,
 } from "./ProjectStyledComponents";
 
 const UpdateProjectModal = ({ project, onClose }) => {
@@ -13,16 +16,28 @@ const UpdateProjectModal = ({ project, onClose }) => {
     members: Array.isArray(project.members) ? project.members : [], // Ensure members is an array
   });
 
+  const [newMemberName, setNewMemberName] = useState("");
+
   const handleChange = (e) => {
     setUpdatedProject({ ...updatedProject, [e.target.name]: e.target.value });
   };
 
-  const handleMembersChange = (e) => {
-    const membersArray = e.target.value
-      .split(",")
-      .map((member) => member.trim())
-      .filter((member) => member);
-    setUpdatedProject({ ...updatedProject, members: membersArray });
+  const handleAddMember = (e) => {
+    e.preventDefault();
+    if (newMemberName.trim()) {
+      setUpdatedProject({
+        ...updatedProject,
+        members: [...updatedProject.members, newMemberName.trim()],
+      });
+      setNewMemberName("");
+    }
+  };
+
+  const handleRemoveMember = (index) => {
+    setUpdatedProject({
+      ...updatedProject,
+      members: updatedProject.members.filter((_, i) => i !== index),
+    });
   };
 
   const handleUpdate = () => {
@@ -43,8 +58,8 @@ const UpdateProjectModal = ({ project, onClose }) => {
   };
 
   return (
-    <ProjectModalWrapper>
-      <ProjectModalContent>
+    <ProjectModalWrapper onClick={onClose}>
+      <ProjectModalContent onClick={(e) => e.stopPropagation()}>
         <h2>Update Project</h2>
         <ProjectInput
           type="text"
@@ -67,17 +82,38 @@ const UpdateProjectModal = ({ project, onClose }) => {
           value={updatedProject.url}
           onChange={handleChange}
         />
-        <ProjectInput
-          type="text"
-          name="members"
-          placeholder="Members (comma-separated)"
-          value={
-            Array.isArray(updatedProject.members)
-              ? updatedProject.members.join(", ")
-              : ""
-          }
-          onChange={handleMembersChange}
-        />
+
+        {/* Member Input Field */}
+        <form onSubmit={handleAddMember}>
+          <ProjectInput
+            type="text"
+            name="newMember"
+            placeholder="Enter member name and press Enter"
+            value={newMemberName}
+            onChange={(e) => setNewMemberName(e.target.value)}
+          />
+        </form>
+
+        {/* Display List of Members */}
+        {updatedProject.members.length > 0 && (
+          <MemberListContainer>
+            <strong>Members:</strong>
+            <ul>
+              {updatedProject.members.map((member, index) => (
+                <MemberListItem key={index}>
+                  {member}
+                  <RemoveMemberButton
+                    type="button"
+                    onClick={() => handleRemoveMember(index)}
+                  >
+                    Remove
+                  </RemoveMemberButton>
+                </MemberListItem>
+              ))}
+            </ul>
+          </MemberListContainer>
+        )}
+
         <div
           style={{
             display: "flex",
