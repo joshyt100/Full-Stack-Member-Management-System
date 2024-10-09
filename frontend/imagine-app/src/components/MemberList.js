@@ -27,7 +27,7 @@ const MemberList = () => {
 
   const fetchMembers = () => {
     axios
-      .get(`${apiUrl}members`)
+      .get(`${apiUrl}/members`)
       .then((response) => {
         setMembers(response.data);
       })
