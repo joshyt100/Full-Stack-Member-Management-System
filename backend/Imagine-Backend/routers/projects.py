@@ -89,3 +89,15 @@ def update_projects(project_id: str, project: Project):
         raise HTTPException(status_code=404, detail="Project does not exist")
     doc.update(project.dict())
     return "Project updated successfully"
+
+
+@router.delete("/projects/{project_id}")
+def delete_member(project_id: str):
+    doc = db.collection("projects").document(project_id)
+    get_doc = doc.get()
+
+    if not get_doc.exists:
+        print("Member does not exist")
+        raise HTTPException(status_code=404, detail="Member does not exist")
+    doc.delete()
+    return "Member deleted successfully"

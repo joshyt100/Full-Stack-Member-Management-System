@@ -16,7 +16,7 @@ import {
 import UpdateProjectModal from "./UpdateProjectModal";
 import MemberInfoModal from "./MemberInfoModal";
 
-const apiUrl = process.env.REACT_APP_API_URL; // Set up your backend API URL here
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -45,7 +45,8 @@ const ProjectList = () => {
     axios
       .delete(`${apiUrl}/projects/${projectId}`)
       .then(() => {
-        setProjects(projects.filter((project) => project.id !== projectId));
+        // Fetch the updated list of projects after a successful deletion
+        fetchProjects();
         alert("Project deleted successfully");
       })
       .catch((error) => {
@@ -102,10 +103,7 @@ const ProjectList = () => {
 
       {filteredProjects.length > 0 ? (
         filteredProjects.map((project) => (
-          <ProjectItem
-            key={project.id}
-            onClick={() => openUpdateModal(project)}
-          >
+          <ProjectItem key={project.id}>
             <ProjectName>{project.name}</ProjectName>
             <ProjectDescription>{project.description}</ProjectDescription>
             <ProjectURL
